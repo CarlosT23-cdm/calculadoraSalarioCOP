@@ -23,32 +23,33 @@ function calcular() {
         parseFloat(document.getElementById("auxilioTransporte").value) || 0;
     const exoneracion = document.getElementById("exoneracion").value;
     const horasMes =
-        parseFloat(document.getElementById("horasMes").value) || 210;
+        parseFloat(document.getElementById("horasMes").value) ||
+        NORMATIVA_COLOMBIA.HORAS_MES_DEFECTO;
 
     const valorHoraOrdinaria = salarioBase / horasMes;
 
-    // Recargos y Extras
+    // Recargos y Extras usando la constante global
     const recNocturno =
         (parseFloat(document.getElementById("recNocturno").value) || 0) *
-        (valorHoraOrdinaria * 0.35);
+        (valorHoraOrdinaria * NORMATIVA_COLOMBIA.RECARGOS.NOCTURNO);
     const extDiurna =
         (parseFloat(document.getElementById("extDiurna").value) || 0) *
-        (valorHoraOrdinaria * 1.25);
+        (valorHoraOrdinaria * NORMATIVA_COLOMBIA.RECARGOS.EXTRA_DIURNA);
     const extNocturna =
         (parseFloat(document.getElementById("extNocturna").value) || 0) *
-        (valorHoraOrdinaria * 1.75);
+        (valorHoraOrdinaria * NORMATIVA_COLOMBIA.RECARGOS.EXTRA_NOCTURNA);
     const recDomDiurno =
         (parseFloat(document.getElementById("recDomDiurno").value) || 0) *
-        (valorHoraOrdinaria * 0.75);
+        (valorHoraOrdinaria * NORMATIVA_COLOMBIA.RECARGOS.DOM_FEST_DIURNO);
     const recDomNocturno =
         (parseFloat(document.getElementById("recDomNocturno").value) || 0) *
-        (valorHoraOrdinaria * 1.1);
+        (valorHoraOrdinaria * NORMATIVA_COLOMBIA.RECARGOS.DOM_FEST_NOCTURNO);
     const extDomDiurna =
         (parseFloat(document.getElementById("extDomDiurna").value) || 0) *
-        (valorHoraOrdinaria * 2.0);
+        (valorHoraOrdinaria * NORMATIVA_COLOMBIA.RECARGOS.EXTRA_DOM_DIURNA);
     const extDomNocturna =
         (parseFloat(document.getElementById("extDomNocturna").value) || 0) *
-        (valorHoraOrdinaria * 2.5);
+        (valorHoraOrdinaria * NORMATIVA_COLOMBIA.RECARGOS.EXTRA_DOM_NOCTURNA);
 
     const totalExtras =
         recNocturno +
@@ -64,20 +65,34 @@ function calcular() {
     const basePrestaciones = salarioBase + totalExtras + auxilioTransporte;
     const baseSeguridadSocial = salarioBase + totalExtras;
 
-    // Prestaciones Sociales (~21.84%)
-    const cesantias = basePrestaciones * 0.0833;
-    const intCesantias = cesantias * 0.12;
-    const prima = basePrestaciones * 0.0833;
-    const vacaciones = (salarioBase + totalExtras) * 0.0417;
+    // Prestaciones Sociales calculadas con config.js
+    const cesantias =
+        basePrestaciones * NORMATIVA_COLOMBIA.PRESTACIONES.CESANTIAS;
+    const intCesantias =
+        cesantias * NORMATIVA_COLOMBIA.PRESTACIONES.INTERESES_CESANTIAS;
+    const prima = basePrestaciones * NORMATIVA_COLOMBIA.PRESTACIONES.PRIMA;
+    const vacaciones =
+        baseSeguridadSocial * NORMATIVA_COLOMBIA.PRESTACIONES.VACACIONES;
     const totalPrestaciones = cesantias + intCesantias + prima + vacaciones;
 
-    // Seguridad Social & Parafiscales
-    const pension = baseSeguridadSocial * 0.12;
-    const arl = baseSeguridadSocial * 0.00522; // Riesgo I por defecto
-    let salud = exoneracion === "si" ? 0 : baseSeguridadSocial * 0.085;
-    let sena = exoneracion === "si" ? 0 : baseSeguridadSocial * 0.02;
-    let icbf = exoneracion === "si" ? 0 : baseSeguridadSocial * 0.03;
-    const caja = baseSeguridadSocial * 0.04;
+    // Seguridad Social & Parafiscales calculados con config.js
+    const pension =
+        baseSeguridadSocial * NORMATIVA_COLOMBIA.SEGURIDAD_SOCIAL.PENSION;
+    const arl =
+        baseSeguridadSocial * NORMATIVA_COLOMBIA.SEGURIDAD_SOCIAL.ARL_RIESGO_1;
+    let salud =
+        exoneracion === "si"
+            ? 0
+            : baseSeguridadSocial * NORMATIVA_COLOMBIA.SEGURIDAD_SOCIAL.SALUD;
+    let sena =
+        exoneracion === "si"
+            ? 0
+            : baseSeguridadSocial * NORMATIVA_COLOMBIA.SEGURIDAD_SOCIAL.SENA;
+    let icbf =
+        exoneracion === "si"
+            ? 0
+            : baseSeguridadSocial * NORMATIVA_COLOMBIA.SEGURIDAD_SOCIAL.ICBF;
+    const caja = baseSeguridadSocial * NORMATIVA_COLOMBIA.SEGURIDAD_SOCIAL.CAJA;
 
     const totalSeguridad = pension + arl + salud + sena + icbf + caja;
     const costoTotalEmpleador =
@@ -87,7 +102,7 @@ function calcular() {
             ? ((costoTotalEmpleador - salarioBase) / salarioBase) * 100
             : 0;
 
-    // Actualizar Render
+    // Actualizar Render en el DOM
     document.getElementById("totalWorker").innerText =
         `$ ${Math.round(totalTrabajador).toLocaleString("es-CO")}`;
     document.getElementById("totalEmployer").innerText =
@@ -119,15 +134,31 @@ function calcular() {
 
 function renderTablaHoras(vOrdinaria) {
     const table = document.getElementById("rateTable");
+    const r = NORMATIVA_COLOMBIA.RECARGOS;
     const items = [
         { name: "Valor Hora Ordinaria", val: vOrdinaria },
-        { name: "Recargo Nocturno (35%)", val: vOrdinaria * 0.35 },
-        { name: "Hora Extra Diurna (125%)", val: vOrdinaria * 1.25 },
-        { name: "Hora Extra Nocturna (175%)", val: vOrdinaria * 1.75 },
-        { name: "Re. Dom/Fest Diurno (75%)", val: vOrdinaria * 0.75 },
-        { name: "Recargo Dom/Fest Nocturno (110%)", val: vOrdinaria * 1.1 },
-        { name: "Hora Extra Dom/Fest Diurna (200%)", val: vOrdinaria * 2.0 },
-        { name: "Hora Extra Dom/Fest Noct (250%)", val: vOrdinaria * 2.5 }
+        { name: "Recargo Nocturno (35%)", val: vOrdinaria * r.NOCTURNO },
+        { name: "Hora Extra Diurna (125%)", val: vOrdinaria * r.EXTRA_DIURNA },
+        {
+            name: "Hora Extra Nocturna (175%)",
+            val: vOrdinaria * r.EXTRA_NOCTURNA
+        },
+        {
+            name: "Recargo Dom/Fest Diurno (75%)",
+            val: vOrdinaria * r.DOM_FEST_DIURNO
+        },
+        {
+            name: "Recargo Dom/Fest Nocturno (110%)",
+            val: vOrdinaria * r.DOM_FEST_NOCTURNO
+        },
+        {
+            name: "Hora Extra Dom/Fest Diurna (200%)",
+            val: vOrdinaria * r.EXTRA_DOM_DIURNA
+        },
+        {
+            name: "Hora Extra Dom/Fest Nocturna (250%)",
+            val: vOrdinaria * r.EXTRA_DOM_NOCTURNA
+        }
     ];
 
     table.innerHTML = items
@@ -246,6 +277,28 @@ if (btnDonate && donateModal) {
 }
 
 function copySupportNumber(number) {
-    navigator.clipboard.writeText(number);
-    alert("Número copiado al portapapeles");
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard
+            .writeText(number)
+            .then(() => {
+                alert("Número copiado al portapapeles");
+            })
+            .catch(() => fallbackCopy(number));
+    } else {
+        fallbackCopy(number);
+    }
+}
+
+function fallbackCopy(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+        document.execCommand("copy");
+        alert("Número copiado al portapapeles");
+    } catch (err) {
+        alert("No se pudo copiar automáticamente. Número: " + text);
+    }
+    document.body.removeChild(textArea);
 }
