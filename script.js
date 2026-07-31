@@ -224,3 +224,28 @@ function ejecutarCompartir(text) {
         alert("Copiado al portapapeles");
     }
 }
+
+const btnDonate = document.getElementById("btnDonate");
+const donateModal = document.getElementById("donateModal");
+const closeDonate = document.getElementById("closeDonate");
+
+if (btnDonate && donateModal) {
+    btnDonate.addEventListener("click", () => {
+        donateModal.style.display = "flex";
+    });
+
+    closeDonate.addEventListener("click", () => {
+        donateModal.style.display = "none";
+    });
+
+    window.addEventListener("click", e => {
+        if (e.target === donateModal) {
+            donateModal.style.display = "none";
+        }
+    });
+}
+
+function copySupportNumber(number) {
+    navigator.clipboard.writeText(number);
+    alert("Número copiado al portapapeles");
+}
