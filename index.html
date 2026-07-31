@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Costo Laboral y Nomina Colombia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="calculator-container">
+    <h1>Calculadora de Costo Real de Empleado</h1>
+    <p class="subtitle">Calcula el costo total para el empleador y recargos de horas extra en Colombia.</p>
+
+    <!-- FORMULARIO DE ENTRADA -->
+    <form id="labor-form">
+      <div class="form-group">
+        <label for="salario">Salario Básico Mensual (COP):</label>
+        <input type="number" id="salario" value="1750000" min="0" step="10000" required>
+      </div>
+
+      <div class="form-group">
+        <label for="auxilio">Auxilio de Transporte (COP):</label>
+        <input type="number" id="auxilio" value="250000" min="0" step="5000" required>
+      </div>
+
+      <div class="form-group">
+        <label for="exonerado">¿Aplica Exoneración de Parafiscales (Art. 114-1 E.T.)?</label>
+        <select id="exonerado">
+          <option value="si" selected>Sí (Empresa / Persona Natural con 2+ empleados)</option>
+          <option value="no">No (Persona Natural con 1 empleado / Salarios > 10 SMMLV)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="horasMes">Horas mensuales para cálculo de hora ordinaria:</label>
+        <input type="number" id="horasMes" value="210" min="1" required>
+        <small>42 hrs/sem = 210 hrs/mes | Base anterior (48 hrs/sem) = 240 hrs/mes</small>
+      </div>
+
+      <h3>Horas Extra y Recargos Trabajados (Opcional)</h3>
+      <div class="extras-grid">
+        <div class="form-group">
+          <label for="recNocturno">Recargo Nocturno (35%):</label>
+          <input type="number" id="recNocturno" value="0" min="0">
+        </div>
+        <div class="form-group">
+          <label for="heDiurna">Extra Diurna (125%):</label>
+          <input type="number" id="heDiurna" value="0" min="0">
+        </div>
+        <div class="form-group">
+          <label for="heNocturna">Extra Nocturna (175%):</label>
+          <input type="number" id="heNocturna" value="0" min="0">
+        </div>
+        <div class="form-group">
+          <label for="recDomDiurno">Recargo Dom/Fest Diurno (75%):</label>
+          <input type="number" id="recDomDiurno" value="0" min="0">
+        </div>
+        <div class="form-group">
+          <label for="recDomNocturno">Recargo Dom/Fest Nocturno (110%):</label>
+          <input type="number" id="recDomNocturno" value="0" min="0">
+        </div>
+        <div class="form-group">
+          <label for="heDomDiurna">Extra Dom/Fest Diurna (200%):</label>
+          <input type="number" id="heDomDiurna" value="0" min="0">
+        </div>
+        <div class="form-group">
+          <label for="heDomNocturna">Extra Dom/Fest Nocturna (250%):</label>
+          <input type="number" id="heDomNocturna" value="0" min="0">
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-calcular" class="btn btn-primary">Calcular Costo Total</button>
+        <button type="button" id="btn-guardar" class="btn btn-secondary">💾 Guardar en Historial</button>
+      </div>
+    </form>
+
+    <!-- RESULTADOS -->
+    <section class="results-container" id="resultados">
+      <h2>Resumen de Costos</h2>
+      
+      <div class="result-card total">
+        <span>Costo Total Mensual para Empleador:</span>
+        <strong id="res-total-costo">$0 COP</strong>
+      </div>
+
+      <div class="results-breakdown">
+        <div><span>Salario Base:</span> <strong id="res-salario">$0</strong></div>
+        <div><span>Auxilio de Transporte:</span> <strong id="res-auxilio">$0</strong></div>
+        <div><span>Horas Extra y Recargos:</span> <strong id="res-extras">$0</strong></div>
+        <div><span>Prestaciones Sociales:</span> <strong id="res-prestaciones">$0</strong></div>
+        <div><span>Seguridad Social y Parafiscales:</span> <strong id="res-seguridad">$0</strong></div>
+        <div><span>Porcentaje de Sobrecosto:</span> <strong id="res-porcentaje">0%</strong></div>
+      </div>
+
+      <h3>Tabla de Valor por Hora Extra / Recargo</h3>
+      <ul class="rates-list" id="rates-list"></ul>
+    </section>
+
+    <!-- SECCIÓN HISTORIAL -->
+    <section class="history-container">
+      <div class="history-header">
+        <h2>Historial de Cálculos</h2>
+        <button type="button" id="btn-limpiar-historial" class="btn btn-danger-sm">Borrar Historial</button>
+      </div>
+      <div id="history-list" class="history-list">
+        <p class="empty-history">No hay cálculos guardados todavía.</p>
+      </div>
+    </section>
+
+    <!-- INFORMACIÓN ADICIONAL / DESPLEGABLE -->
+    <section class="info-accordion">
+      <details>
+        <summary>A tener en cuenta / Información adicional y Especificaciones</summary>
+        <div class="info-content">
+          <h4>Base Legal y Estructura de Costos</h4>
+          <p>El costo real de un empleado para una empresa en Colombia oscila entre un <strong>53% y un 68.6% adicional</strong> sobre el salario básico, dependiendo de la exoneración de aportes patronales.</p>
+          
+          <ul>
+            <li><strong>Salario Base + Auxilio de Transporte:</strong> El auxilio se suma a la base para calcular Cesantías, Intereses sobre Cesantías y Prima, pero NO para Vacaciones ni Seguridad Social.</li>
+            <li><strong>Prestaciones Sociales (Provisión mensual):</strong>
+              <ul>
+                <li>Cesantías: 8,33%</li>
+                <li>Intereses sobre Cesantías: 1% mensual (12% anual)</li>
+                <li>Prima de Servicios: 8,33%</li>
+                <li>Vacaciones: 4,17% (solo sobre salario básico)</li>
+              </ul>
+            </li>
+            <li><strong>Seguridad Social y Parafiscales:</strong>
+              <ul>
+                <li>Pensión: 12%</li>
+                <li>Caja de Compensación: 4%</li>
+                <li>ARL Riesgo I: 0.522% (base estándar)</li>
+                <li>Salud (8.5%), SENA (2%) e ICBF (3%): Solo se pagan si NO aplica exoneración.</li>
+              </ul>
+            </li>
+            <li><strong>Regla de Exoneración (Art. 114-1 E.T.):</strong>
+              <ul>
+                <li><strong>Personas Jurídicas (Empresas):</strong> Exoneradas de Salud, SENA e ICBF desde 1 empleado (para salarios menores a 10 SMMLV).</li>
+                <li><strong>Personas Naturales:</strong> Solo exoneradas si tienen 2 o más empleados. Si tienen 1 solo empleado, pagan la totalidad.</li>
+              </ul>
+            </li>
+            <li><strong>Aspectos no incluidos en el costo base:</strong> Dotación legal (calzado y vestido de labor 3 veces al año), exámenes médicos ocupacionales (ingreso, periódico, egreso) y recargos operativos variables.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
