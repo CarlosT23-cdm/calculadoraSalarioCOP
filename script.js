@@ -1,172 +1,226 @@
+let currentCalculation = null;
+
 document.addEventListener("DOMContentLoaded", () => {
-  const btnCalcular = document.getElementById("btn-calcular");
-  const btnGuardar = document.getElementById("btn-guardar");
-  const btnLimpiarHistorial = document.getElementById("btn-limpiar-historial");
-  const historyList = document.getElementById("history-list");
+    calcular();
+    renderHistorial();
 
-  let ultimoCalculo = null;
+    document.getElementById("btnCalcular").addEventListener("click", calcular);
+    document
+        .getElementById("btnGuardar")
+        .addEventListener("click", guardarEnHistorial);
+    document
+        .getElementById("btnShareAll")
+        .addEventListener("click", shareAllHistory);
+    document
+        .getElementById("btnClearAll")
+        .addEventListener("click", clearAllHistory);
+});
 
-  // Formateador de moneda colombiana
-  const formatCOP = (val) => {
-    return new Intl.NumberFormat("es-CO", {
-      style: "currency",
-      currency: "COP",
-      maximumFractionDigits: 0
-    }).format(val);
-  };
+function calcular() {
+    const salarioBase =
+        parseFloat(document.getElementById("salarioBase").value) || 0;
+    const auxilioTransporte =
+        parseFloat(document.getElementById("auxilioTransporte").value) || 0;
+    const exoneracion = document.getElementById("exoneracion").value;
+    const horasMes =
+        parseFloat(document.getElementById("horasMes").value) || 210;
 
-  const calcularNomina = () => {
-    // Entradas básicas
-    const salario = parseFloat(document.getElementById("salario").value) || 0;
-    const auxilio = parseFloat(document.getElementById("auxilio").value) || 0;
-    const esExonerado = document.getElementById("exonerado").value === "si";
-    const horasMes = parseFloat(document.getElementById("horasMes").value) || 210;
+    const valorHoraOrdinaria = salarioBase / horasMes;
 
-    // Horas extra y recargos
-    const recNocturno = parseFloat(document.getElementById("recNocturno").value) || 0;
-    const heDiurna = parseFloat(document.getElementById("heDiurna").value) || 0;
-    const heNocturna = parseFloat(document.getElementById("heNocturna").value) || 0;
-    const recDomDiurno = parseFloat(document.getElementById("recDomDiurno").value) || 0;
-    const recDomNocturno = parseFloat(document.getElementById("recDomNocturno").value) || 0;
-    const heDomDiurna = parseFloat(document.getElementById("heDomDiurna").value) || 0;
-    const heDomNocturna = parseFloat(document.getElementById("heDomNocturna").value) || 0;
+    // Recargos y Extras
+    const recNocturno =
+        (parseFloat(document.getElementById("recNocturno").value) || 0) *
+        (valorHoraOrdinaria * 0.35);
+    const extDiurna =
+        (parseFloat(document.getElementById("extDiurna").value) || 0) *
+        (valorHoraOrdinaria * 1.25);
+    const extNocturna =
+        (parseFloat(document.getElementById("extNocturna").value) || 0) *
+        (valorHoraOrdinaria * 1.75);
+    const recDomDiurno =
+        (parseFloat(document.getElementById("recDomDiurno").value) || 0) *
+        (valorHoraOrdinaria * 0.75);
+    const recDomNocturno =
+        (parseFloat(document.getElementById("recDomNocturno").value) || 0) *
+        (valorHoraOrdinaria * 1.1);
+    const extDomDiurna =
+        (parseFloat(document.getElementById("extDomDiurna").value) || 0) *
+        (valorHoraOrdinaria * 2.0);
+    const extDomNocturna =
+        (parseFloat(document.getElementById("extDomNocturna").value) || 0) *
+        (valorHoraOrdinaria * 2.5);
 
-    // Cálculo de Hora Ordinaria
-    const horaOrdinaria = salario / horasMes;
+    const totalExtras =
+        recNocturno +
+        extDiurna +
+        extNocturna +
+        recDomDiurno +
+        recDomNocturno +
+        extDomDiurna +
+        extDomNocturna;
 
-    // Factores de recargo/extra
-    const tarifas = {
-      recNocturno: { factor: 0.35, label: "Recargo Nocturno (35%)" },
-      heDiurna: { factor: 1.25, label: "Hora Extra Diurna (125%)" },
-      heNocturna: { factor: 1.75, label: "Hora Extra Nocturna (175%)" },
-      recDomDiurno: { factor: 0.75, label: "Recargo Dom/Fest Diurno (75%)" },
-      recDomNocturno: { factor: 1.10, label: "Recargo Dom/Fest Nocturno (110%)" },
-      heDomDiurna: { factor: 2.00, label: "Hora Extra Dom/Fest Diurna (200%)" },
-      heDomNocturna: { factor: 2.50, label: "Hora Extra Dom/Fest Nocturna (250%)" }
-    };
+    // Totales
+    const totalTrabajador = salarioBase + auxilioTransporte + totalExtras;
+    const basePrestaciones = salarioBase + totalExtras + auxilioTransporte;
+    const baseSeguridadSocial = salarioBase + totalExtras;
 
-    // Totalizar valor de extras y recargos
-    let totalExtras = 0;
-    totalExtras += recNocturno * (horaOrdinaria * tarifas.recNocturno.factor);
-    totalExtras += heDiurna * (horaOrdinaria * tarifas.heDiurna.factor);
-    totalExtras += heNocturna * (horaOrdinaria * tarifas.heNocturna.factor);
-    totalExtras += recDomDiurno * (horaOrdinaria * tarifas.recDomDiurno.factor);
-    totalExtras += recDomNocturno * (horaOrdinaria * tarifas.recDomNocturno.factor);
-    totalExtras += heDomDiurna * (horaOrdinaria * tarifas.heDomDiurna.factor);
-    totalExtras += heDomNocturna * (horaOrdinaria * tarifas.heDomNocturna.factor);
-
-    // Bases de liquidación
-    const basePrestaciones = salario + auxilio + totalExtras;
-    const baseVacaciones = salario; 
-    const baseSeguridadSocial = salario + totalExtras;
-
-    // Prestaciones Sociales
+    // Prestaciones Sociales (~21.84%)
     const cesantias = basePrestaciones * 0.0833;
-    const interesesCesantias = basePrestaciones * 0.01;
+    const intCesantias = cesantias * 0.12;
     const prima = basePrestaciones * 0.0833;
-    const vacaciones = baseVacaciones * 0.0417;
-    const totalPrestaciones = cesantias + interesesCesantias + prima + vacaciones;
+    const vacaciones = (salarioBase + totalExtras) * 0.0417;
+    const totalPrestaciones = cesantias + intCesantias + prima + vacaciones;
 
-    // Seguridad Social y Parafiscales
+    // Seguridad Social & Parafiscales
     const pension = baseSeguridadSocial * 0.12;
-    const arl = baseSeguridadSocial * 0.00522; // Riesgo I
+    const arl = baseSeguridadSocial * 0.00522; // Riesgo I por defecto
+    let salud = exoneracion === "si" ? 0 : baseSeguridadSocial * 0.085;
+    let sena = exoneracion === "si" ? 0 : baseSeguridadSocial * 0.02;
+    let icbf = exoneracion === "si" ? 0 : baseSeguridadSocial * 0.03;
     const caja = baseSeguridadSocial * 0.04;
 
-    let salud = 0;
-    let sena = 0;
-    let icbf = 0;
+    const totalSeguridad = pension + arl + salud + sena + icbf + caja;
+    const costoTotalEmpleador =
+        totalTrabajador + totalPrestaciones + totalSeguridad;
+    const sobrecosto =
+        salarioBase > 0
+            ? ((costoTotalEmpleador - salarioBase) / salarioBase) * 100
+            : 0;
 
-    if (!esExonerado) {
-      salud = baseSeguridadSocial * 0.085;
-      sena = baseSeguridadSocial * 0.02;
-      icbf = baseSeguridadSocial * 0.03;
-    }
+    // Actualizar Render
+    document.getElementById("totalWorker").innerText =
+        `$ ${Math.round(totalTrabajador).toLocaleString("es-CO")}`;
+    document.getElementById("totalEmployer").innerText =
+        `$ ${Math.round(costoTotalEmpleador).toLocaleString("es-CO")}`;
+    document.getElementById("detSalario").innerText =
+        `$ ${Math.round(salarioBase).toLocaleString("es-CO")}`;
+    document.getElementById("detAuxilio").innerText =
+        `$ ${Math.round(auxilioTransporte).toLocaleString("es-CO")}`;
+    document.getElementById("detExtras").innerText =
+        `$ ${Math.round(totalExtras).toLocaleString("es-CO")}`;
+    document.getElementById("detPrestaciones").innerText =
+        `$ ${Math.round(totalPrestaciones).toLocaleString("es-CO")}`;
+    document.getElementById("detSeguridad").innerText =
+        `$ ${Math.round(totalSeguridad).toLocaleString("es-CO")}`;
+    document.getElementById("detSobrecosto").innerText =
+        `${sobrecosto.toFixed(1)}%`;
 
-    const totalSeguridadSocial = pension + arl + caja + salud + sena + icbf;
+    renderTablaHoras(valorHoraOrdinaria);
 
-    // Totales finales
-    const costoTotal = salario + auxilio + totalExtras + totalPrestaciones + totalSeguridadSocial;
-    const sobrecostoPorcentaje = ((costoTotal - (salario + auxilio)) / salario) * 100;
-
-    // Guardar referencia del cálculo actual
-    ultimoCalculo = {
-      salario,
-      auxilio,
-      totalExtras,
-      costoTotal,
-      sobrecostoPorcentaje,
-      fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    currentCalculation = {
+        fecha: new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit"
+        }),
+        totalTrabajador: Math.round(totalTrabajador),
+        costoTotal: Math.round(costoTotalEmpleador)
     };
+}
 
-    // Mostrar resultados en la interfaz
-    document.getElementById("res-salario").textContent = formatCOP(salario);
-    document.getElementById("res-auxilio").textContent = formatCOP(auxilio);
-    document.getElementById("res-extras").textContent = formatCOP(totalExtras);
-    document.getElementById("res-prestaciones").textContent = formatCOP(totalPrestaciones);
-    document.getElementById("res-seguridad").textContent = formatCOP(totalSeguridadSocial);
-    document.getElementById("res-total-costo").textContent = formatCOP(costoTotal);
-    document.getElementById("res-porcentaje").textContent = `${sobrecostoPorcentaje.toFixed(1)}%`;
+function renderTablaHoras(vOrdinaria) {
+    const table = document.getElementById("rateTable");
+    const items = [
+        { name: "Valor Hora Ordinaria", val: vOrdinaria },
+        { name: "Recargo Nocturno (35%)", val: vOrdinaria * 0.35 },
+        { name: "Hora Extra Diurna (125%)", val: vOrdinaria * 1.25 },
+        { name: "Hora Extra Nocturna (175%)", val: vOrdinaria * 1.75 },
+        { name: "Re. Dom/Fest Diurno (75%)", val: vOrdinaria * 0.75 },
+        { name: "Recargo Dom/Fest Nocturno (110%)", val: vOrdinaria * 1.1 },
+        { name: "Hora Extra Dom/Fest Diurna (200%)", val: vOrdinaria * 2.0 },
+        { name: "Hora Extra Dom/Fest Noct (250%)", val: vOrdinaria * 2.5 }
+    ];
 
-    // Renderizar desglose de tarifas por hora
-    const ratesList = document.getElementById("rates-list");
-    ratesList.innerHTML = `<li><span>Valor Hora Ordinaria:</span> <strong>${formatCOP(horaOrdinaria)}</strong></li>`;
+    table.innerHTML = items
+        .map(
+            item => `
+        <div class="rate-row">
+            <span>${item.name}:</span>
+            <strong>$ ${Math.round(item.val).toLocaleString("es-CO")} / hr</strong>
+        </div>
+    `
+        )
+        .join("");
+}
 
-    Object.keys(tarifas).forEach((key) => {
-      const valHora = horaOrdinaria * tarifas[key].factor;
-      ratesList.innerHTML += `
-        <li>
-          <span>${tarifas[key].label}:</span> 
-          <strong>${formatCOP(valHora)} / hr</strong>
-        </li>`;
-    });
-  };
+function guardarEnHistorial() {
+    if (!currentCalculation) return;
+    let history = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    history.unshift(currentCalculation);
+    localStorage.setItem("calcHistory", JSON.stringify(history));
+    renderHistorial();
+}
 
-  // FUNCIONES DE HISTORIAL
-  const obtenerHistorial = () => {
-    return JSON.parse(localStorage.getItem("historialCalculos")) || [];
-  };
+function renderHistorial() {
+    const historyList = document.getElementById("historyList");
+    const history = JSON.parse(localStorage.getItem("calcHistory")) || [];
 
-  const guardarEnHistorial = () => {
-    if (!ultimoCalculo) return;
-
-    const historial = obtenerHistorial();
-    historial.unshift(ultimoCalculo); // Agregar al inicio
-    if (historial.length > 10) historial.pop(); // Mantener máximo 10 registros
-
-    localStorage.setItem("historialCalculos", JSON.stringify(historial));
-    renderizarHistorial();
-  };
-
-  const renderizarHistorial = () => {
-    const historial = obtenerHistorial();
-
-    if (historial.length === 0) {
-      historyList.innerHTML = `<p class="empty-history">No hay cálculos guardados todavía.</p>`;
-      return;
+    if (history.length === 0) {
+        historyList.innerHTML =
+            '<p class="empty-msg">No hay cálculos guardados todavía.</p>';
+        return;
     }
 
-    historyList.innerHTML = historial.map((item) => `
-      <div class="history-item">
-        <div class="history-item-details">
-          <strong>${formatCOP(item.costoTotal)}</strong>
-          <span>Base: ${formatCOP(item.salario)} | Extras: ${formatCOP(item.totalExtras)}</span>
+    historyList.innerHTML = history
+        .map(
+            (item, index) => `
+        <div class="history-item">
+            <div class="history-info">
+                <strong>Empleador: $ ${item.costoTotal.toLocaleString("es-CO")}</strong>
+                <p>Trabajador: $ ${item.totalTrabajador.toLocaleString("es-CO")} | ${item.fecha}</p>
+            </div>
+            <div class="history-actions">
+                <button class="btn-icon" onclick="shareItem(${index})" title="Compartir">📤</button>
+                <button class="btn-icon" onclick="deleteItem(${index})" title="Eliminar">🗑️</button>
+            </div>
         </div>
-        <span>${item.fecha} hs</span>
-      </div>
-    `).join("");
-  };
+    `
+        )
+        .join("");
+}
 
-  const borrarHistorial = () => {
-    localStorage.removeItem("historialCalculos");
-    renderizarHistorial();
-  };
+function deleteItem(index) {
+    let history = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    history.splice(index, 1);
+    localStorage.setItem("calcHistory", JSON.stringify(history));
+    renderHistorial();
+}
 
-  // Escuchar eventos
-  btnCalcular.addEventListener("click", calcularNomina);
-  btnGuardar.addEventListener("click", guardarEnHistorial);
-  btnLimpiarHistorial.addEventListener("click", borrarHistorial);
+function clearAllHistory() {
+    localStorage.removeItem("calcHistory");
+    renderHistorial();
+}
 
-  // Ejecución inicial
-  calcularNomina();
-  renderizarHistorial();
-});
+function shareItem(index) {
+    const history = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    const item = history[index];
+    const text =
+        `📊 *Cálculo de Nómina Colombia*\n` +
+        `• Neto Trabajador: $ ${item.totalTrabajador.toLocaleString("es-CO")}\n` +
+        `• Costo Empleador: $ ${item.costoTotal.toLocaleString("es-CO")}\n` +
+        `• Hora: ${item.fecha}`;
+
+    ejecutarCompartir(text);
+}
+
+function shareAllHistory() {
+    const history = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    if (history.length === 0) return alert("El historial está vacío");
+
+    let text = `📋 *Historial de Cálculos*\n\n`;
+    history.forEach((item, i) => {
+        text += `#${i + 1} | Empleador: $${item.costoTotal.toLocaleString("es-CO")} | Trabajador: $${item.totalTrabajador.toLocaleString("es-CO")}\n`;
+    });
+
+    ejecutarCompartir(text);
+}
+
+function ejecutarCompartir(text) {
+    if (navigator.share) {
+        navigator
+            .share({ title: "Cálculo de Salario", text: text })
+            .catch(() => {});
+    } else {
+        navigator.clipboard.writeText(text);
+        alert("Copiado al portapapeles");
+    }
+}
