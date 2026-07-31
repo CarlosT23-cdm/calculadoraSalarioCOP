@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Base Normativa y Fórmulas - Calculadora Laboral Colombia</title>
+        <style>
+            :root {
+                --bg-primary: #121212;
+                --bg-card: #1e1e1e;
+                --bg-inner: #262626;
+                --accent-blue: #2563eb;
+                --text-main: #e0e0e0;
+                --text-muted: #a0a0a0;
+                --border-color: #333333;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Helvetica, Arial, sans-serif;
+            }
+
+            body {
+                background-color: var(--bg-primary);
+                color: var(--text-main);
+                padding: 20px 15px;
+                display: flex;
+                justify-content: center;
+                line-height: 1.6;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 750px;
+            }
+
+            header {
+                text-align: center;
+                margin-bottom: 25px;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 15px;
+            }
+
+            header h1 {
+                font-size: 1.6rem;
+                color: #ffffff;
+                margin-bottom: 6px;
+            }
+
+            header p {
+                color: var(--text-muted);
+                font-size: 0.9rem;
+            }
+
+            .card {
+                background-color: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+                color: #ffffff;
+                margin-bottom: 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            h3 {
+                font-size: 1.05rem;
+                color: #60a5fa;
+                margin: 18px 0 10px 0;
+                border-bottom: 1px solid #2d2d2d;
+                padding-bottom: 4px;
+            }
+
+            p,
+            li {
+                font-size: 0.9rem;
+                color: #cccccc;
+                margin-bottom: 10px;
+            }
+
+            ul {
+                padding-left: 20px;
+                margin-bottom: 15px;
+            }
+
+            /* Bloques de Fórmulas */
+            .formula-box {
+                background-color: var(--bg-inner);
+                border-left: 4px solid var(--accent-blue);
+                padding: 12px 15px;
+                border-radius: 0 8px 8px 0;
+                margin: 10px 0 15px 0;
+                font-family: "Courier New", Courier, monospace;
+                font-size: 0.88rem;
+                color: #e2e8f0;
+                overflow-x: auto;
+            }
+
+            .formula-title {
+                font-family: inherit;
+                font-weight: bold;
+                color: #ffffff;
+                margin-bottom: 4px;
+                display: block;
+            }
+
+            .disclaimer-box {
+                background-color: #2a1a1a;
+                border: 1px solid #7f1d1d;
+                border-radius: 8px;
+                padding: 15px;
+                margin-top: 20px;
+            }
+
+            .disclaimer-box h3 {
+                color: #f87171;
+                border: none;
+                margin-top: 0;
+                padding: 0;
+            }
+
+            .btn-back {
+                display: inline-block;
+                background-color: var(--bg-card);
+                border: 1px solid var(--border-color);
+                color: #ffffff;
+                padding: 10px 18px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-size: 0.9rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+                transition: all 0.2s ease;
+            }
+
+            .btn-back:hover {
+                background-color: #2d2d2d;
+                border-color: #4b5563;
+            }
+
+            footer {
+                text-align: center;
+                font-size: 0.78rem;
+                color: var(--text-muted);
+                margin-top: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <a href="index.html" class="btn-back">← Volver a la Calculadora</a>
+
+            <header>
+                <h1>📌 Base Normativa y Fórmulas de Cálculo</h1>
+                <p
+                    >Guía clara de la legislación laboral colombiana y su
+                    representación matemática para el año 2026.</p
+                >
+            </header>
+
+            <!-- SECCIÓN 1: NORMATIVA EN ESPAÑOL SENCILLO -->
+            <section class="card">
+                <h2>📜 1. Puntos Clave de la Normativa Laboral</h2>
+                <p
+                    >Para entender los resultados de la calculadora, estas son
+                    las reglas principales dictadas por el Código Sustantivo del
+                    Trabajo CST y las leyes recientes:</p
+                >
+
+                <ul>
+                    <li
+                        ><strong
+                            >Jornada Laboral Ordinaria Ley 2101 de 2021:</strong
+                        >
+                        La jornada legal máxima es de
+                        <strong>42 horas semanales</strong> equivalentes a
+                        <strong>210 horas mensuales</strong>. Esto aumenta
+                        automáticamente el valor de la hora ordinaria frente a
+                        años anteriores.</li
+                    >
+                    <li
+                        ><strong
+                            >Exoneración de Parafiscales Art. 114-1
+                            E.T.:</strong
+                        >
+                        Las empresas sociedades y las personas naturales con 2 o
+                        más empleados no pagan <strong>Salud 8.5%</strong>,
+                        <strong>SENA 2%</strong> ni <strong>ICBF 3%</strong> por
+                        aquellos trabajadores que ganen menos de 10 Salarios
+                        Mínimos SMMLV.</li
+                    >
+                    <li
+                        ><strong>Base de Liquidación:</strong> Las prestaciones
+                        sociales Cesantías, Prima, etc. se calculan sobre el
+                        Salario Base + Auxilio de Transporte + Horas
+                        Extra/Recargos. Sin embargo, la Seguridad Social
+                        Pensión, ARL no incluye el Auxilio de Transporte.</li
+                    >
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: TODAS LAS FÓRMULAS MATEMÁTICAS -->
+            <section class="card">
+                <h2>🧮 2. Formulario Matemático Completo</h2>
+                <p
+                    >Todas las operaciones matemáticas aplicadas en el código
+                    fuente de la herramienta:</p
+                >
+
+                <h3>A. Hora Ordinaria y Recargos/Extras</h3>
+
+                <div class="formula-box">
+                    <span class="formula-title">Valor Hora Ordinaria VHO:</span>
+                    VHO = Salario_Básico / Horas_Mensuales ej: 210
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title">Recargo Nocturno 35%:</span>
+                    Valor = Horas * VHO * 0.35
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title">Hora Extra Diurna 125%:</span>
+                    Valor = Horas * VHO * 1.25
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title">Hora Extra Nocturna 175%:</span>
+                    Valor = Horas * VHO * 1.75
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Recargo Dominical/Festivo Diurno 75%:</span
+                    >
+                    Valor = Horas * VHO * 0.75
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Recargo Dominical/Festivo Nocturno 110%:</span
+                    >
+                    Valor = Horas * VHO * 1.10
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Hora Extra Dominical/Festiva Diurna 200%:</span
+                    >
+                    Valor = Horas * VHO * 2.00
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Hora Extra Dominical/Festiva Nocturna 250%:</span
+                    >
+                    Valor = Horas * VHO * 2.50
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Total Horas Extra y Recargos TE:</span
+                    >
+                    TE = Suma de todos los recargos y extras trabajados
+                </div>
+
+                <h3>B. Neto a Recibir por el Trabajador</h3>
+
+                <div class="formula-box">
+                    <span class="formula-title">Total Devengado Neto:</span>
+                    Neto_Trabajador = Salario_Básico + Auxilio_Transporte + TE
+                </div>
+
+                <h3>C. Bases para Liquidación</h3>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Base Prestaciones Sociales BPS:</span
+                    >
+                    BPS = Salario_Básico + TE + Auxilio_Transporte
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Base Seguridad Social y Parafiscales BSS:</span
+                    >
+                    BSS = Salario_Básico + TE
+                </div>
+
+                <h3>D. Prestaciones Sociales ~21.84%</h3>
+
+                <div class="formula-box">
+                    <span class="formula-title">Cesantías 8.33%:</span>
+                    Cesantías = BPS * 0.0833
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Intereses sobre Cesantías 12% sobre cesantías:</span
+                    >
+                    Intereses = Cesantías * 0.12
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title">Prima de Servicios 8.33%:</span>
+                    Prima = BPS * 0.0833
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Vacaciones 4.17% sobre sueldo sin aux.
+                        transporte:</span
+                    >
+                    Vacaciones = BSS * 0.0417
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Total Prestaciones Sociales:</span
+                    >
+                    Total_Prestaciones = Cesantías + Intereses + Prima +
+                    Vacaciones
+                </div>
+
+                <h3>E. Seguridad Social y Parafiscales</h3>
+
+                <div class="formula-box">
+                    <span class="formula-title">Pensión Empleador 12%:</span>
+                    Pensión = BSS * 0.12
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >ARL Riesgo I 0.522% por defecto:</span
+                    >
+                    ARL = BSS * 0.00522
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Salud Empleador 8.5% - Si NO aplica exoneración:</span
+                    >
+                    Salud = Exonerado ? 0 : BSS * 0.085
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >SENA 2% - Si NO aplica exoneración:</span
+                    >
+                    SENA = Exonerado ? 0 : BSS * 0.02
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >ICBF 3% - Si NO aplica exoneración:</span
+                    >
+                    ICBF = Exonerado ? 0 : BSS * 0.03
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Caja de Compensación Familiar 4%:</span
+                    >
+                    Caja = BSS * 0.04
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Total Seguridad Social y Parafiscales:</span
+                    >
+                    Total_Seguridad = Pensión + ARL + Salud + SENA + ICBF + Caja
+                </div>
+
+                <h3>F. Costo Total Empleador y Sobrecosto</h3>
+
+                <div class="formula-box">
+                    <span class="formula-title">Costo Total Empleador:</span>
+                    Costo_Total = Neto_Trabajador + Total_Prestaciones +
+                    Total_Seguridad
+                </div>
+
+                <div class="formula-box">
+                    <span class="formula-title"
+                        >Porcentaje de Sobrecosto respecto al Salario
+                        Base:</span
+                    >
+                    Sobrecosto % = Costo_Total - Salario_Básico / Salario_Básico
+                    * 100
+                </div>
+            </section>
+
+            <!-- SECCIÓN 3: DESCARGO DE RESPONSABILIDAD -->
+            <div class="disclaimer-box">
+                <h3>⚠️ Nota Legal y Alcance</h3>
+                <p
+                    >Esta herramienta es una guía de estimación orientativa
+                    construida bajo los parámetros generales de la legislación
+                    laboral colombiana. No constituye una liquidación legal
+                    vinculante ni reemplaza la asesoría de un contador o
+                    especialista laboral. Los valores exactos pueden variar
+                    según novedades particulares, riesgos de ARL específicos o
+                    retenciones en la fuente aplicables.</p
+                >
+            </div>
+
+            <footer>
+                <p
+                    >Polar Web Studio | Herramienta de Cálculo Laboral Colombia
+                    | 2026</p
+                >
+            </footer>
+        </div>
+    </body>
+</html>
