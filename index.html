@@ -1,132 +1,262 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Costo Real de Empleado - Colombia</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Calculadora de Costo Real de Empleado</h1>
-            <p>Calcula el valor devengado por el trabajador y el costo total del empleador en Colombia.</p>
-        </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Calculadora de Costo Real de Empleado - Colombia</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Calculadora de Costo Real de Empleado</h1>
+                <p
+                    >Calcula el valor devengado por el trabajador y el costo
+                    total del empleador en Colombia.</p
+                >
+            </header>
 
-        <main>
-            <section class="card form-section">
-                <h2>Datos del Empleado</h2>
-                
-                <div class="form-group">
-                    <label for="salarioBase">Salario Básico Mensual - COP:</label>
-                    <input type="number" id="salarioBase" value="1750000" placeholder="Ej: 1300000">
-                </div>
+            <main>
+                <section class="card form-section">
+                    <h2>Datos del Empleado</h2>
 
-                <div class="form-group">
-                    <label for="auxilioTransporte">Auxilio de Transporte - COP:</label>
-                    <input type="number" id="auxilioTransporte" value="250000" placeholder="Ej: 162000">
-                </div>
-
-                <div class="form-group">
-                    <label for="exoneracion">¿Aplica Exoneración de Parafiscales - Art. 114-1 E.T?</label>
-                    <select id="exoneracion">
-                        <option value="no">No, Persona Natural con 1 empleado, Salarios > 10 SMMLV</option>
-                        <option value="si">Sí, Sociedad o Persona Natural con 2+ empleados.</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="horasMes">Horas mensuales para cálculo de hora ordinaria:</label>
-                    <input type="number" id="horasMes" value="210">
-                    <small>42 hrs/sem = 210 hrs/mes | Base anterior de 48 hrs/sem = 240 hrs/mes</small>
-                </div>
-
-                <h3>Horas Extra y Recargos Trabajados - Opcional.</h3>
-                <div class="grid-inputs">
                     <div class="form-group">
-                        <label for="recNocturno">Recargo Nocturno, 35%:</label>
-                        <input type="number" id="recNocturno" value="0">
+                        <label for="salarioBase"
+                            >Salario Básico Mensual - COP:</label
+                        >
+                        <input
+                            type="number"
+                            id="salarioBase"
+                            value="1750000"
+                            placeholder="Ej: 1300000"
+                        />
                     </div>
+
                     <div class="form-group">
-                        <label for="extDiurna">Extra Diurna, 125%:</label>
-                        <input type="number" id="extDiurna" value="0">
+                        <label for="auxilioTransporte"
+                            >Auxilio de Transporte - COP:</label
+                        >
+                        <input
+                            type="number"
+                            id="auxilioTransporte"
+                            value="250000"
+                            placeholder="Ej: 162000"
+                        />
                     </div>
+
                     <div class="form-group">
-                        <label for="extNocturna">Extra Nocturna, 175%:</label>
-                        <input type="number" id="extNocturna" value="0">
+                        <label for="exoneracion"
+                            >¿Aplica Exoneración de Parafiscales - Art. 114-1
+                            E.T?</label
+                        >
+                        <select id="exoneracion">
+                            <option value="no"
+                                >No, Persona Natural con 1 empleado, Salarios >
+                                10 SMMLV</option
+                            >
+                            <option value="si"
+                                >Sí, Sociedad o Persona Natural con 2+
+                                empleados.</option
+                            >
+                        </select>
                     </div>
+
                     <div class="form-group">
-                        <label for="recDomDiurno">Recargo Dom/Fest Diurno, 75%:</label>
-                        <input type="number" id="recDomDiurno" value="0">
+                        <label for="horasMes"
+                            >Horas mensuales para cálculo de hora
+                            ordinaria:</label
+                        >
+                        <input type="number" id="horasMes" value="210" />
+                        <small
+                            >42 hrs/sem = 210 hrs/mes | Base anterior de 48
+                            hrs/sem = 240 hrs/mes</small
+                        >
                     </div>
-                    <div class="form-group">
-                        <label for="recDomNocturno">Recargo Dom/Fest Nocturno, 110%:</label>
-                        <input type="number" id="recDomNocturno" value="0">
+
+                    <h3>Horas Extra y Recargos Trabajados - Opcional.</h3>
+                    <div class="grid-inputs">
+                        <div class="form-group">
+                            <label for="recNocturno"
+                                >Recargo Nocturno, 35%:</label
+                            >
+                            <input type="number" id="recNocturno" value="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="extDiurna">Extra Diurna, 125%:</label>
+                            <input type="number" id="extDiurna" value="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="extNocturna"
+                                >Extra Nocturna, 175%:</label
+                            >
+                            <input type="number" id="extNocturna" value="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="recDomDiurno"
+                                >Recargo Dom/Fest Diurno, 75%:</label
+                            >
+                            <input type="number" id="recDomDiurno" value="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="recDomNocturno"
+                                >Recargo Dom/Fest Nocturno, 110%:</label
+                            >
+                            <input
+                                type="number"
+                                id="recDomNocturno"
+                                value="0"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="extDomDiurna"
+                                >Extra Dom/Fest Diurna, 200%:</label
+                            >
+                            <input type="number" id="extDomDiurna" value="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="extDomNocturna"
+                                >Extra Dom/Fest Nocturna, 250%:</label
+                            >
+                            <input
+                                type="number"
+                                id="extDomNocturna"
+                                value="0"
+                            />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="extDomDiurna">Extra Dom/Fest Diurna, 200%:</label>
-                        <input type="number" id="extDomDiurna" value="0">
+
+                    <div class="button-group">
+                        <button id="btnCalcular" class="btn btn-primary"
+                            >Calcular Costo Total</button
+                        >
+                        <button id="btnGuardar" class="btn btn-secondary"
+                            >💾 Guardar en Historial</button
+                        >
                     </div>
-                    <div class="form-group">
-                        <label for="extDomNocturna">Extra Dom/Fest Nocturna, 250%:</label>
-                        <input type="number" id="extDomNocturna" value="0">
+                </section>
+
+                <section class="card results-section">
+                    <h2>Resumen de Costos</h2>
+
+                    <div class="results-grid">
+                        <div class="card-result worker-card">
+                            <span>Neto a Recibir por el Trabajador:</span>
+                            <h3 id="totalWorker">$ 0</h3>
+                            <small
+                                >Salario base + Aux. Transporte +
+                                Recargos/Extras.</small
+                            >
+                        </div>
+
+                        <div class="card-result employer-card">
+                            <span>Costo Total Mensual para Empleador:</span>
+                            <h3 id="totalEmployer">$ 0</h3>
+                            <small
+                                >Incluye Prestaciones, Salud, Pensión, ARL y
+                                Parafiscales</small
+                            >
+                        </div>
                     </div>
+
+                    <div class="details-list">
+                        <div class="detail-item"
+                            ><span>Salario Base:</span
+                            ><strong id="detSalario">$ 0</strong></div
+                        >
+                        <div class="detail-item"
+                            ><span>Auxilio de Transporte:</span
+                            ><strong id="detAuxilio">$ 0</strong></div
+                        >
+                        <div class="detail-item"
+                            ><span>Horas Extra y Recargos:</span
+                            ><strong id="detExtras">$ 0</strong></div
+                        >
+                        <div class="detail-item"
+                            ><span>Prestaciones Sociales:</span
+                            ><strong id="detPrestaciones">$ 0</strong></div
+                        >
+                        <div class="detail-item"
+                            ><span>Seguridad Social y Parafiscales:</span
+                            ><strong id="detSeguridad">$ 0</strong></div
+                        >
+                        <div class="detail-item"
+                            ><span>Porcentaje de Sobrecosto:</span
+                            ><strong id="detSobrecosto">0%</strong></div
+                        >
+                    </div>
+
+                    <h3>Tabla de Valor por Hora Extra / Recargo</h3>
+                    <div class="rate-table" id="rateTable">
+                        <!-- Generado dinámicamente con JS -->
+                    </div>
+                </section>
+
+                <section class="card history-section">
+                    <div class="history-header">
+                        <h2>Historial de Cálculos</h2>
+                        <div class="global-actions">
+                            <button id="btnShareAll" class="btn-action"
+                                >📲 Compartir Todo</button
+                            >
+                            <button
+                                id="btnClearAll"
+                                class="btn-action btn-danger"
+                                >🗑️ Borrar Todo</button
+                            >
+                        </div>
+                    </div>
+                    <div id="historyList" class="history-list"></div>
+                </section>
+            </main>
+
+            <!-- Sección de Apoyo / Donación -->
+            <div class="support-section card">
+                <h3>☕ ¿Te resultó útil esta calculadora?</h3>
+                <p
+                    >Esta es una herramienta gratuita e independiente. Si deseas
+                    apoyar su mantenimiento y nuevas funciones, puedes realizar
+                    una contribución voluntaria.</p
+                >
+                <button id="btnDonate" class="btn btn-support"
+                    >🤝 Hacer un aporte voluntario</button
+                >
+            </div>
+
+            <!-- Modal / Ventana Emergente -->
+            <div id="donateModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal" id="closeDonate">&times;</span>
+                    <h3>Apoyar el Proyecto</h3>
+                    <p
+                        >Tu colaboración ayuda a mantener la plataforma sin
+                        anuncios y actualizada con la normativa laboral
+                        colombiana.</p
+                    >
+                    <div class="payment-methods">
+                        <p
+                            ><strong>Cuenta ahorros Davivienda:</strong>
+                            <code
+                                >0550488423200937 a nombre de Carlos López
+                                .</code
+                            ></p
+                        >
+                    </div>
+                    <button
+                        class="btn btn-secondary"
+                        onclick="copySupportNumber('0550488423200937')"
+                        >📋 Copiar Número de Cuenta</button
+                    >
                 </div>
+            </div>
 
-                <div class="button-group">
-                    <button id="btnCalcular" class="btn btn-primary">Calcular Costo Total</button>
-                    <button id="btnGuardar" class="btn btn-secondary">💾 Guardar en Historial</button>
-                </div>
-            </section>
-
-            <section class="card results-section">
-                <h2>Resumen de Costos</h2>
-                
-                <div class="results-grid">
-                    <div class="card-result worker-card">
-                        <span>Neto a Recibir por el Trabajador:</span>
-                        <h3 id="totalWorker">$ 0</h3>
-                        <small>Salario base + Aux. Transporte + Recargos/Extras.</small>
-                    </div>
-
-                    <div class="card-result employer-card">
-                        <span>Costo Total Mensual para Empleador:</span>
-                        <h3 id="totalEmployer">$ 0</h3>
-                        <small>Incluye Prestaciones, Salud, Pensión, ARL y Parafiscales</small>
-                    </div>
-                </div>
-
-                <div class="details-list">
-                    <div class="detail-item"><span>Salario Base:</span><strong id="detSalario">$ 0</strong></div>
-                    <div class="detail-item"><span>Auxilio de Transporte:</span><strong id="detAuxilio">$ 0</strong></div>
-                    <div class="detail-item"><span>Horas Extra y Recargos:</span><strong id="detExtras">$ 0</strong></div>
-                    <div class="detail-item"><span>Prestaciones Sociales:</span><strong id="detPrestaciones">$ 0</strong></div>
-                    <div class="detail-item"><span>Seguridad Social y Parafiscales:</span><strong id="detSeguridad">$ 0</strong></div>
-                    <div class="detail-item"><span>Porcentaje de Sobrecosto:</span><strong id="detSobrecosto">0%</strong></div>
-                </div>
-
-                <h3>Tabla de Valor por Hora Extra / Recargo</h3>
-                <div class="rate-table" id="rateTable">
-                    <!-- Generado dinámicamente con JS -->
-                </div>
-            </section>
-
-            <section class="card history-section">
-                <div class="history-header">
-                    <h2>Historial de Cálculos</h2>
-                    <div class="global-actions">
-                        <button id="btnShareAll" class="btn-action">📲 Compartir Todo</button>
-                        <button id="btnClearAll" class="btn-action btn-danger">🗑️ Borrar Todo</button>
-                    </div>
-                </div>
-                <div id="historyList" class="history-list"></div>
-            </section>
-        </main>
-
-        <footer>
-            <p>Polar Web Studio | Herramienta de Cálculo Laboral Colombia | año 2026</p>
-        </footer>
-    </div>
-    <script src="script.js"></script>
-</body>
+            <!-- Pie de página -->
+            <footer>
+                <p
+                    >Polar Web Studio | Herramienta de Cálculo Laboral Colombia
+                    | 2026</p
+                >
+            </footer>
+        </div>
+        <script src="script.js"></script>
+    </body>
 </html>
