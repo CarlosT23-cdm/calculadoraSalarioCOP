@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cómo Usar la Calculadora - Guía Paso a Paso</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>📘 Guía de Uso de la Calculadora</h1>
+                <p>
+                    Aprende a configurar los parámetros y switches según el
+                    escenario laboral real en Colombia.
+                </p>
+
+                <div class="theme-selector">
+                    <label for="themeSelect">🎨 Tema:</label>
+                    <select id="themeSelect">
+                        <option value="dark">Oscuro (Defecto)</option>
+                        <option value="light">Claro</option>
+                        <option value="slate">Gris</option>
+                        <option value="blue">Azul Oscuro</option>
+                    </select>
+                </div>
+            </header>
+
+            <main style="display: block">
+                <!-- Introducción Breve -->
+                <section class="card">
+                    <h2>🎯 Objetivo de la Herramienta</h2>
+                    <p
+                        style="
+                            font-size: 0.9rem;
+                            line-height: 1.5;
+                            color: var(--text-color);
+                        "
+                    >
+                        Esta calculadora te permite simular tanto escenarios
+                        <strong>100% formales y legales</strong> bajo el Código
+                        Sustantivo del Trabajo (CST), como
+                        <strong
+                            >acuerdos independientes o de informalidad</strong
+                        >. Ajustando la configuración, obtendrás con precisión
+                        el ingreso neto del trabajador y el costo real para el
+                        empleador.
+                    </p>
+                </section>
+
+                <!-- Sección 1: Entradas Básicas -->
+                <section class="card">
+                    <h2>1️⃣ Datos Principales del Empleado</h2>
+                    <div class="details-list">
+                        <div
+                            class="detail-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 4px;
+                            "
+                        >
+                            <strong>Salario Básico Mensual (COP)</strong>
+                            <small
+                                >Monto acordado antes de extras y prestaciones.
+                                La base de SMMLV de referencia para 2026 es de
+                                $1'750.000 COP.</small
+                            >
+                        </div>
+                        <div
+                            class="detail-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 4px;
+                            "
+                        >
+                            <strong>Auxilio de Transporte (COP)</strong>
+                            <small
+                                >Por ley aplica si el trabajador devenga hasta 2
+                                SMMLV. Puedes modificar el valor si existe un
+                                acuerdo especial o auxilio de conectividad por
+                                teletrabajo.</small
+                            >
+                        </div>
+                        <div
+                            class="detail-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 4px;
+                            "
+                        >
+                            <strong>Horas Mensuales (Jornada)</strong>
+                            <small
+                                >En 2026 rige la reducción gradual de la
+                                <strong>Ley 2101 de 2021</strong> a 42 horas
+                                semanales, lo que equivale a
+                                <strong>210 horas/mes</strong> (42 hrs x 4.33
+                                semanas x 1.157 divisor estándar o base directa
+                                comercial). Si el trabajador labora medio
+                                tiempo, puedes ajustar este valor manualmente a
+                                105 hrs.</small
+                            >
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sección 2: Tipos de Contrato y ARL -->
+                <section class="card">
+                    <h2>2️⃣ Configuración del Contrato y ARL</h2>
+                    <div class="details-list">
+                        <div
+                            class="detail-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 4px;
+                            "
+                        >
+                            <strong
+                                >Término Indefinido / Fijo (Estándar
+                                Laboral)</strong
+                            >
+                            <small
+                                >Aplica todas las cargas legales: Salud,
+                                Pensión, ARL, Parafiscales y Prestaciones
+                                Sociales completas (Cesantías, Intereses, Prima
+                                y Vacaciones).</small
+                            >
+                        </div>
+                        <div
+                            class="detail-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 4px;
+                            "
+                        >
+                            <strong
+                                >Prestación de Servicios (Contratista)</strong
+                            >
+                            <small
+                                >Al seleccionarlo, el costo adicional del
+                                empleador pasa a ser <strong>$0</strong>. Se
+                                asume que el contratista paga su propia
+                                seguridad social y no recibe
+                                prestaciones.</small
+                            >
+                        </div>
+                        <div
+                            class="detail-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 4px;
+                            "
+                        >
+                            <strong>Salario Integral</strong>
+                            <small
+                                >Para salarios superiores a 13 SMMLV. Desactiva
+                                la liquidación mensual tradicional de
+                                prestaciones sociales.</small
+                            >
+                        </div>
+                        <div
+                            class="detail-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 4px;
+                            "
+                        >
+                            <strong>Nivel de Riesgo ARL (I al V)</strong>
+                            <small
+                                >Determina el aporte a la Administradora de
+                                Riesgos Laborales. Va desde Riesgo I (0.522%
+                                para oficina) hasta Riesgo V (6.960% para
+                                minería o construcción).</small
+                            >
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sección 3: Explicación de Switches -->
+                <section class="card">
+                    <h2>🎛️ 3️⃣ Switches de Excepción (Modos Especiales)</h2>
+                    <p
+                        style="
+                            font-size: 0.85rem;
+                            color: var(--text-muted);
+                            margin-bottom: 12px;
+                        "
+                    >
+                        Estos botones te permiten desactivar de un solo clic
+                        cargas económicas específicas para ajustar la nómina a
+                        la realidad del contrato:
+                    </p>
+
+                    <div class="switches-grid">
+                        <div
+                            class="switch-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 6px;
+                            "
+                        >
+                            <strong
+                                >( ON / OFF ) Pagar Auxilio de
+                                Transporte</strong
+                            >
+                            <small
+                                >Desactívalo si el empleado reside en el sitio
+                                de trabajo, si la empresa suministra transporte
+                                propio o en acuerdos informales donde no se
+                                contempla.</small
+                            >
+                        </div>
+
+                        <div
+                            class="switch-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 6px;
+                            "
+                        >
+                            <strong
+                                >( ON / OFF ) Exoneración Art. 114-1
+                                E.T.</strong
+                            >
+                            <small
+                                ><strong>Mantener ON:</strong> Si la empresa o
+                                persona natural con 2+ empleados aplica la
+                                exoneración fiscal. Exime al empleador de pagar
+                                Salud Patronal (8.5%), SENA (2%) e ICBF (3%).<br /><strong
+                                    >Cambiar a OFF:</strong
+                                >
+                                Si es una persona natural con 1 solo empleado o
+                                si los salarios superan los 10 SMMLV.</small
+                            >
+                        </div>
+
+                        <div
+                            class="switch-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 6px;
+                            "
+                        >
+                            <strong
+                                >( ON / OFF ) Incluir Prestaciones
+                                Sociales</strong
+                            >
+                            <small
+                                >Controla la proyección mensual de Cesantías
+                                (8.33%), Intereses (12%), Prima (8.33%) y
+                                Vacaciones (4.17%). Si apagas este switch, verás
+                                solo el costo operativo diario/mensual
+                                inmediato.</small
+                            >
+                        </div>
+
+                        <div
+                            class="switch-item"
+                            style="
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 6px;
+                            "
+                        >
+                            <strong
+                                >( ON / OFF ) Modo Informal / Sin Aportes
+                                Patronales</strong
+                            >
+                            <small style="color: #f59e0b"
+                                >⚠️ Modo Especial:</small
+                            >
+                            <small
+                                >Apaga automáticamente todos los aportes de
+                                Salud, Pensión, ARL y Parafiscales a cargo del
+                                patrono. Ideal para acuerdos de pago netos "en
+                                mano" o trabajos de jornal rural/urbano
+                                informal.</small
+                            >
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sección 4: Horas Extras y Recargos -->
+                <section class="card">
+                    <h2>⏰ 4️⃣ Horas Extras y Recargos</h2>
+                    <p
+                        style="
+                            font-size: 0.85rem;
+                            color: var(--text-muted);
+                            margin-bottom: 10px;
+                        "
+                    >
+                        Introduce el total de
+                        <strong>horas trabajadas en el mes</strong> para cada
+                        recargo. La calculadora determinará el valor de la hora
+                        ordinaria basándose en la cifra digitada en "Horas
+                        mensuales" (ej. Salario / 210) y multiplicará
+                        automáticamente por los recargos de ley:
+                    </p>
+                    <ul
+                        style="
+                            font-size: 0.85rem;
+                            padding-left: 20px;
+                            color: var(--text-color);
+                            line-height: 1.6;
+                        "
+                    >
+                        <li
+                            ><strong>Recargo Nocturno:</strong> +35% sobre la
+                            hora base.</li
+                        >
+                        <li
+                            ><strong>Extra Diurna:</strong> 125% (Hora base +
+                            25%).</li
+                        >
+                        <li
+                            ><strong>Extra Nocturna:</strong> 175% (Hora base +
+                            75%).</li
+                        >
+                        <li><strong>Recargo Dom/Fest Diurno:</strong> 75%.</li>
+                        <li><strong>Extra Dom/Fest Diurna:</strong> 200%.</li>
+                        <li><strong>Extra Dom/Fest Nocturna:</strong> 250%.</li>
+                    </ul>
+                </section>
+
+                <!-- Botón de Regreso -->
+                <div
+                    style="
+                        text-align: center;
+                        margin-top: 20px;
+                        margin-bottom: 20px;
+                    "
+                >
+                    <a
+                        href="index.html"
+                        class="btn btn-primary"
+                        style="
+                            display: inline-block;
+                            text-decoration: none;
+                            max-width: 300px;
+                        "
+                    >
+                        ⬅️ Volver a la Calculadora
+                    </a>
+                </div>
+            </main>
+
+            <footer>
+                <p>Polar Web Studio | Documentación de Usuario | 2026</p>
+            </footer>
+        </div>
+
+        <script>
+            // Script para permitir cambiar de tema también desde el manual
+            document.addEventListener("DOMContentLoaded", () => {
+                const themeSelect = document.getElementById("themeSelect");
+                if (themeSelect) {
+                    const savedTheme =
+                        localStorage.getItem("selectedTheme") || "dark";
+                    document.documentElement.setAttribute(
+                        "data-theme",
+                        savedTheme
+                    );
+                    themeSelect.value = savedTheme;
+
+                    themeSelect.addEventListener("change", e => {
+                        const theme = e.target.value;
+                        document.documentElement.setAttribute(
+                            "data-theme",
+                            theme
+                        );
+                        localStorage.setItem("selectedTheme", theme);
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
